@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Local dev tooling & artifacts (not needed for the deployed site)
+temporary screenshots/
+serve.mjs
+screenshot.mjs
+package.json
+package-lock.json
+CLAUDE.md
+
+# Source photos: only the images used by the site are committed (force-added).
+# This rule keeps the other ~75 unused photos out of the repo.
+Bilder Idrelyan/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
+.vscode/

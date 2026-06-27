@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idrelyan — Stuga & fjällboende i Idre</title>
+  <meta name="description" content="Idrelyan — två fullt utrustade stugor i Idre. Stora lyan (ca 160 kvm, 15 bäddar, bastu) och Lilla lyan (ca 60 kvm, 6 bäddar). Boka ditt fjällboende nära backen." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#1a1714',
+            ink: '#26211c',
+            stone: '#6f665b',
+            snow: '#f7f3ec',
+            birch: '#ece3d2',
+            sand: '#d9c8aa',
+            falu: '#9d3122',
+            ember: '#b8472f',
+            pine: '#2f3a31',
+          },
+          fontFamily: {
+            display: ['Fraunces', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 1px 2px rgba(26,23,20,.06), 0 10px 24px -14px rgba(26,23,20,.30)',
+            lift: '0 2px 6px rgba(26,23,20,.08), 0 24px 50px -22px rgba(26,23,20,.45)',
+            falu: '0 10px 30px -12px rgba(157,49,34,.45)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root { --ease-spring: cubic-bezier(.16,1,.3,1); }
+    html { scroll-behavior: smooth; }
+    body { background: #f7f3ec; -webkit-font-smoothing: antialiased; }
+    img { image-orientation: from-image; }
+
+    .display-tight { letter-spacing: -0.03em; }
+    .body-lh { line-height: 1.7; }
+
+    /* Grain overlay for depth */
+    .grain::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      opacity: .05; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Layered radial gradient washes */
+    .wash-hero {
+      background:
+        radial-gradient(120% 90% at 12% 8%, rgba(157,49,34,.20), transparent 60%),
+        radial-gradient(120% 120% at 92% 0%, rgba(47,58,49,.30), transparent 55%),
+        linear-gradient(to top, rgba(18,15,13,.92) 4%, rgba(18,15,13,.30) 48%, rgba(18,15,13,.55) 100%);
+    }
+    .wash-section {
+      background:
+        radial-gradient(80% 60% at 100% 0%, rgba(217,200,170,.35), transparent 60%),
+        radial-gradient(70% 70% at 0% 100%, rgba(157,49,34,.06), transparent 55%);
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease-spring), transform .8s var(--ease-spring); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* Image treatment */
+    .photo { position: relative; overflow: hidden; }
+    .photo img { transition: transform .9s var(--ease-spring); }
+    .photo:hover img { transform: scale(1.045); }
+    .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(18,15,13,.35), transparent 55%); opacity: 0; transition: opacity .5s var(--ease-spring); }
+    .photo:hover::after { opacity: 1; }
+
+    /* Links */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 1.5px; width: 0; background: currentColor; transition: width .4s var(--ease-spring); }
+    .nav-link:hover::after, .nav-link:focus-visible::after { width: 100%; }
+
+    .btn { transition: transform .3s var(--ease-spring), box-shadow .3s var(--ease-spring), background-color .3s var(--ease-spring), color .3s var(--ease-spring); }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    :focus-visible { outline: 2px solid #b8472f; outline-offset: 3px; border-radius: 4px; }
+
+    /* Lightbox */
+    .lb { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 4vw;
+          background: rgba(14,11,9,.92); opacity: 0; transition: opacity .35s var(--ease-spring); }
+    .lb.open { display: flex; opacity: 1; }
+    .lb img { max-width: 92vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8); transform: scale(.96); transition: transform .4s var(--ease-spring); }
+    .lb.open img { transform: scale(1); }
+    .lb-close { position: absolute; top: 22px; right: 26px; color: #f7f3ec; font-size: 30px; line-height: 1; background: none; border: 0; cursor: pointer; }
+
+    .eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 11px; font-weight: 600; }
+
+    /* Mobile photo carousel — swipe instead of stack (phones only) */
+    @media (max-width: 639px) {
+      .gallery-carousel {
+        display: flex;
+        gap: 0.85rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin-left: -1.25rem;
+        margin-right: -1.25rem;
+        padding: 0 1.25rem 0.4rem;
+        scrollbar-width: none;
+      }
+      .gallery-carousel::-webkit-scrollbar { display: none; }
+      .gallery-carousel > figure {
+        flex: 0 0 82%;
+        scroll-snap-align: center;
+      }
+      .gallery-carousel > figure img { height: 15rem; }
+    }
+  </style>
+</head>
+
+<body class="grain font-sans text-ink antialiased">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div id="navbar" class="mt-3 flex items-center justify-between rounded-full border border-white/10 bg-charcoal/70 px-5 py-3 text-snow backdrop-blur-md shadow-soft transition-colors duration-500">
+        <a href="#top" class="flex items-center gap-2.5 group">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-falu text-snow shadow-falu">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l9-15 9 15z"/><path d="M8.5 11.5l2 2 3-3 2.5 3.5"/></svg>
+          </span>
+          <span class="font-display text-xl font-600 display-tight">Idrelyan</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm font-500">
+          <a href="#stora" class="nav-link">Stora lyan</a>
+          <a href="#lilla" class="nav-link">Lilla lyan</a>
+          <a href="#pistkarta" class="nav-link">Pistkarta</a>
+          <a href="#idre" class="nav-link">Idre</a>
+        </div>
+        <a href="#boka" class="btn rounded-full bg-snow px-5 py-2 text-sm font-600 text-charcoal hover:bg-sand focus-visible:bg-sand">Boka</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="relative min-h-[100svh] w-full overflow-hidden">
+    <img src="Bilder%20Idrelyan/image00113.jpeg" alt="Ljus, högt i tak och utsikt över snöklädd fjällskog i Stora lyan" class="absolute inset-0 h-full w-full object-cover" style="object-position: center 60%;" />
+    <div class="absolute inset-0 wash-hero"></div>
+
+    <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 sm:px-8 pb-16 sm:pb-20">
+      <p class="eyebrow text-sand/90 mb-5 reveal">Idre · Dalarna · Fjällboende</p>
+      <h1 class="font-display font-600 display-tight text-snow text-[14vw] leading-[0.92] sm:text-7xl lg:text-8xl max-w-4xl reveal">
+        Vakna mitt<br>i fjällen.
+      </h1>
+      <p class="mt-6 max-w-xl text-snow/85 text-lg body-lh reveal">
+        Två fullt utrustade stugor i hjärtat av Idre — nära backe, spår och vidsträckt fjäll.
+        Plats för storfamiljen i <span class="text-snow font-500">Stora lyan</span> eller det mysiga sällskapet i <span class="text-snow font-500">Lilla lyan</span>.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4 reveal">
+        <a href="#stora" class="btn rounded-full bg-falu px-7 py-3.5 text-sm font-600 text-snow shadow-falu hover:bg-ember">Utforska husen</a>
+        <a href="#boka" class="btn rounded-full border border-snow/40 bg-white/5 px-7 py-3.5 text-sm font-600 text-snow backdrop-blur-sm hover:bg-white/15">Kontakt &amp; bokning</a>
+      </div>
+
+      <!-- quick facts strip -->
+      <div class="mt-8 sm:mt-12 grid grid-cols-2 gap-x-6 gap-y-5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-10 border-t border-white/15 pt-7 text-snow reveal">
+        <div><div class="font-display text-3xl font-600 display-tight">2</div><div class="text-xs text-snow/70 mt-1">Stugor att hyra</div></div>
+        <div><div class="font-display text-3xl font-600 display-tight">21</div><div class="text-xs text-snow/70 mt-1">Bäddar totalt</div></div>
+        <div><div class="font-display text-3xl font-600 display-tight">Bastu</div><div class="text-xs text-snow/70 mt-1">&amp; braskamin i Stora</div></div>
+        <div><div class="font-display text-3xl font-600 display-tight">Ski in</div><div class="text-xs text-snow/70 mt-1">Nära Idre Fjäll</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRO ============ -->
+  <section class="relative bg-snow">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <p class="eyebrow text-falu mb-5 reveal">Välkommen till Idrelyan</p>
+          <h2 class="font-display font-500 display-tight text-4xl sm:text-5xl text-charcoal leading-[1.05] reveal">
+            Ett hem i fjällen, oavsett om ni är två eller femton.
+          </h2>
+        </div>
+        <div class="lg:col-span-5 reveal">
+          <p class="text-stone body-lh text-lg">
+            Idrelyan består av två stugor sida vid sida i Idre — den rymliga <strong class="text-charcoal font-600">Stora lyan</strong> och den mysiga <strong class="text-charcoal font-600">Lilla lyan</strong>.
+            Här bor ni nära allt det som gör fjället till fjäll: skidåkning på vintern, vandring och cykling på sommaren, och lugnet däremellan.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORA LYAN ============ -->
+  <section id="stora" class="relative bg-birch/40 wash-section">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-8 sm:mb-12">
+        <div class="reveal">
+          <p class="eyebrow text-falu mb-4">Stuga 01 — för storfamiljen</p>
+          <h2 class="font-display font-600 display-tight text-5xl sm:text-6xl text-charcoal leading-none">Stora lyan</h2>
+        </div>
+        <p class="font-display text-2xl text-stone reveal">ca 160 m²</p>
+      </div>
+
+      <!-- feature row: big photo + text -->
+      <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        <figure class="lg:col-span-7 photo rounded-3xl shadow-lift reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00211.jpeg" alt="Stora lyans ljusa allrum med soffor och TV" class="h-64 sm:h-[460px] w-full object-cover cursor-zoom-in" />
+        </figure>
+
+        <div class="lg:col-span-5 flex flex-col justify-between rounded-3xl bg-charcoal text-snow p-8 sm:p-10 shadow-lift reveal">
+          <div>
+            <p class="text-snow/85 body-lh text-[17px]">
+              Stora Idrelyan är ca 160 kvm stor med tre sovrum och tolv bäddar (15 personer) varav tre är 120 cm breda.
+              Sovrummen är placerade på övre plan med ett allrum och badrum utanför. Möjlighet till extra bäddar finns i bäddsoffa i övre plans allrum.
+              På nedre plan finns allrum med kök samt badrum med bastu och tvättmaskin. Braskamin och TV i nedre allrummet samt utgång till en stor altan.
+            </p>
+          </div>
+          <ul class="mt-8 grid grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>3 sovrum</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>12 bäddar · 15 pers</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Bastu</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Braskamin</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Tvättmaskin</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Stor altan</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- gallery -->
+      <div class="gallery-carousel mt-8 sm:mt-6 lg:mt-8 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 lg:gap-8">
+        <figure class="photo rounded-2xl shadow-soft reveal sm:col-span-2 lg:col-span-2">
+          <img data-lb src="Bilder%20Idrelyan/image00016.jpeg" alt="Idrelyan i vinterskrud med djup snö" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00200.jpeg" alt="Sovrum med våningssängar" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00155.jpeg" alt="Bastu i trä" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00178.jpeg" alt="Badrum med dusch" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00164.jpeg" alt="Allrum med TV och braskamin" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00070.jpeg" alt="Sovrum med flera bäddar" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00011.jpeg" alt="Stora lyan utvändigt i vinterskrud" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LILLA LYAN ============ -->
+  <section id="lilla" class="relative bg-snow">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-8 sm:mb-12">
+        <div class="reveal">
+          <p class="eyebrow text-falu mb-4">Stuga 02 — det mysiga valet</p>
+          <h2 class="font-display font-600 display-tight text-5xl sm:text-6xl text-charcoal leading-none">Lilla lyan</h2>
+        </div>
+        <p class="font-display text-2xl text-stone reveal">ca 60 m²</p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        <div class="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-between rounded-3xl border border-birch bg-white/70 p-8 sm:p-10 shadow-soft reveal">
+          <div>
+            <p class="text-stone body-lh text-[17px]">
+              Lilla Idrelyan är ca 60 kvm stor och har sex sängplatser + plats för små barn, fördelat på två sovrum.
+              Sovrum ett har en dubbelsäng och barnsäng. Sovrum två har två rejäla våningssängar.
+              Vidare finns kök och ett mysigt kombinerat allrum / matplats med soffa och TV.
+            </p>
+          </div>
+          <ul class="mt-8 grid grid-cols-2 gap-3 text-sm text-ink">
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>2 sovrum</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>6 bäddar + småbarn</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Dubbelsäng</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Våningssängar</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Kök</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Allrum &amp; TV</li>
+          </ul>
+        </div>
+
+        <figure class="lg:col-span-7 order-1 lg:order-2 photo rounded-3xl shadow-lift reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00085.jpeg" alt="Lilla lyans kök med vita luckor" class="h-64 sm:h-[460px] w-full object-cover cursor-zoom-in" />
+        </figure>
+      </div>
+
+      <div class="gallery-carousel mt-8 sm:mt-6 lg:mt-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 lg:gap-8">
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00030.jpeg" alt="Mysig matplats i Lilla lyan" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00056.jpeg" alt="Ljust sovrum" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00006.jpeg" alt="Stugan utvändigt i snön" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PISTKARTA ============ -->
+  <section id="pistkarta" class="relative bg-pine text-snow overflow-hidden">
+    <div class="absolute inset-0 opacity-30" style="background: radial-gradient(80% 60% at 80% 0%, rgba(157,49,34,.5), transparent 60%);"></div>
+    <div class="relative mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+        <div class="reveal">
+          <p class="eyebrow text-sand mb-4">Aktuell pistkarta</p>
+          <h2 class="font-display font-600 display-tight text-4xl sm:text-5xl leading-none">Idre Fjäll — säsong 2025/2026</h2>
+          <p class="mt-4 max-w-2xl text-snow/75 body-lh">
+            Officiell pistkarta från Idre Fjäll, inbäddad live nedan så att den alltid hålls uppdaterad.
+            Backen ligger bara en kort transfer från husen — perfekt för dagar i liften.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 reveal">
+          <a href="https://www.idrefjall.se/globalassets/1.-filer/kartor/pistkartor/idrefjall_pistkarta_2026.pdf" target="_blank" rel="noopener" class="btn rounded-full bg-snow px-5 py-2.5 text-sm font-600 text-pine hover:bg-sand">Öppna pistkarta (PDF)</a>
+          <a href="https://www.idrefjall.se/om-oss/information/vader/" target="_blank" rel="noopener" class="btn rounded-full border border-snow/40 px-5 py-2.5 text-sm font-600 text-snow hover:bg-white/10">Live pist- &amp; liftstatus</a>
+        </div>
+      </div>
+
+      <div class="reveal rounded-3xl border border-white/15 bg-charcoal/40 p-2 sm:p-3 shadow-lift">
+        <div class="relative w-full overflow-hidden rounded-2xl bg-birch" style="aspect-ratio: 16/10;">
+          <div class="absolute inset-0 grid place-items-center text-stone">
+            <div class="flex items-center gap-3 text-sm font-500">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 animate-spin" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.2-8.6" stroke-linecap="round"/></svg>
+              Laddar pistkarta…
+            </div>
+          </div>
+          <iframe
+            title="Idre Fjäll pistkarta 2026"
+            src="https://docs.google.com/viewer?url=https%3A%2F%2Fwww.idrefjall.se%2Fglobalassets%2F1.-filer%2Fkartor%2Fpistkartor%2Fidrefjall_pistkarta_2026.pdf&embedded=true"
+            class="absolute inset-0 h-full w-full bg-snow" loading="lazy"></iframe>
+        </div>
+      </div>
+      <p class="mt-4 text-xs text-snow/55 reveal">Karta: © Idre Fjäll. Visas via officiell källa och kan variera under säsongen.</p>
+    </div>
+  </section>
+
+  <!-- ============ IDRE / AKTIVITETER ============ -->
+  <section id="idre" class="relative bg-snow">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow text-falu mb-4">Vad man kan göra i Idre?</p>
+        <h2 class="font-display font-500 display-tight text-4xl sm:text-5xl text-charcoal leading-[1.05]">Fjället runt knuten — året om.</h2>
+      </div>
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
+          <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l7-12 4 7 3-5 4 10z"/></svg>
+          </div>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Utförsåkning</h3>
+          <p class="mt-2.5 text-stone body-lh">Idre Fjäll erbjuder pister för hela familjen — från barnbacke till brantare nedfarter. Pistkartan finns ovan.</p>
+        </div>
+        <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
+          <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4-1 5-9 9-9M5 14l5-5M13 9l6 9"/></svg>
+          </div>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Längd &amp; spår</h3>
+          <p class="mt-2.5 text-stone body-lh">Preparerade längdspår slingrar genom fjällterrängen direkt från området — för både motion och långfärd.</p>
+        </div>
+        <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
+          <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-8 4 5 3-7 4 10M3 21h18"/></svg>
+          </div>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Vandring &amp; cykel</h3>
+          <p class="mt-2.5 text-stone body-lh">När snön smält tar leder för vandring och cykling vid. Fjällsommaren i Idre är ljus, vidsträckt och stillsam.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOKA / KONTAKT ============ -->
+  <section id="boka" class="relative bg-charcoal text-snow overflow-hidden">
+    <div class="absolute inset-0 opacity-50" style="background: radial-gradient(70% 80% at 15% 10%, rgba(157,49,34,.35), transparent 55%), radial-gradient(60% 70% at 95% 90%, rgba(47,58,49,.6), transparent 60%);"></div>
+    <div class="relative mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <p class="eyebrow text-sand mb-4">Priser &amp; bokning</p>
+          <h2 class="font-display font-600 display-tight text-4xl sm:text-6xl leading-[1.02]">Boka din vistelse i Idrelyan.</h2>
+          <p class="mt-6 max-w-lg text-snow/80 body-lh text-lg">
+            För aktuella priser vänligen kolla blocket.se eller stugnet.se (sök efter <span class="text-snow font-500">idrelyan</span>).
+            För information och/eller bokning hör gärna av dig.
+          </p>
+          <div class="mt-9 flex flex-wrap gap-4">
+            <a href="tel:0766113700" class="btn rounded-full bg-falu px-7 py-3.5 text-sm font-600 text-snow shadow-falu hover:bg-ember">Ring 0766-113700</a>
+            <a href="mailto:info@idrelyan.se" class="btn rounded-full border border-snow/40 px-7 py-3.5 text-sm font-600 text-snow hover:bg-white/10">info@idrelyan.se</a>
+          </div>
+        </div>
+
+        <div class="reveal grid sm:grid-cols-2 gap-5">
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <p class="text-sand text-xs eyebrow mb-3">Telefon</p>
+            <a href="tel:0766113700" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors">0766-113700</a>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <p class="text-sand text-xs eyebrow mb-3">E-post</p>
+            <a href="mailto:info@idrelyan.se" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors break-all">info@idrelyan.se</a>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:col-span-2">
+            <p class="text-sand text-xs eyebrow mb-3">Aktuella priser</p>
+            <p class="text-snow/85 body-lh">Sök efter <span class="font-600">idrelyan</span> på
+              <a href="https://www.blocket.se" target="_blank" rel="noopener" class="underline decoration-falu/60 underline-offset-4 hover:text-sand">blocket.se</a> eller
+              <a href="https://www.stugnet.se" target="_blank" rel="noopener" class="underline decoration-falu/60 underline-offset-4 hover:text-sand">stugnet.se</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-ink text-snow/70">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-7 w-7 place-items-center rounded-full bg-falu text-snow">
+          <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l9-15 9 15z"/></svg>
+        </span>
+        <span class="font-display text-lg font-600 text-snow display-tight">Idrelyan</span>
+        <span class="text-snow/40 text-sm ml-2">· Idre, Dalarna</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="#stora" class="nav-link hover:text-snow">Stora lyan</a>
+        <a href="#lilla" class="nav-link hover:text-snow">Lilla lyan</a>
+        <a href="#pistkarta" class="nav-link hover:text-snow">Pistkarta</a>
+        <a href="mailto:info@idrelyan.se" class="nav-link hover:text-snow">Kontakt</a>
+      </div>
+      <p class="text-xs text-snow/40">© <span id="year"></span> Idrelyan</p>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lb" id="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Stäng">&times;</button>
+    <img src="" alt="" />
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Navbar solidifies after hero
+    const navbar = document.getElementById('navbar');
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.7) {
+        navbar.classList.add('bg-charcoal/90');
+        navbar.classList.remove('bg-charcoal/70');
+      } else {
+        navbar.classList.add('bg-charcoal/70');
+        navbar.classList.remove('bg-charcoal/90');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('img');
+    const openLb = (src, alt) => { lbImg.src = src; lbImg.alt = alt || ''; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
+    const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+    document.querySelectorAll('img[data-lb]').forEach((img) => {
+      img.addEventListener('click', () => openLb(img.src, img.alt));
+    });
+    lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('lb-close')) closeLb(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+  </script>
+</body>
+</html>
