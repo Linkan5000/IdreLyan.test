@@ -1,16 +1,18 @@
 # Idrelyan
 
-Website for **Idrelyan** — two rentable cabins in Idre: *Stora lyan* (ca 160 m²) and *Lilla lyan* (ca 60 m²).
+Website for **Idrelyan** — one house in Idre with two rentable apartments, 18 beds in total: *Stora lyan* (ca 160 m², 12 beds) and *Lilla lyan* (ca 60 m², 6 beds).
 
-A single-page static site (`index.html`) built with Tailwind CSS (via CDN), featuring photo galleries for both cabins and an embedded, always-current Idre Fjäll piste map.
+A single-page static site (`index.html`) built with Tailwind CSS (via CDN), featuring photo galleries for both apartments and a looping drone video.
 
 ## Local preview
 
 Open `index.html` directly in a browser, or serve the folder with any static server.
 
+There is no build step — editing `index.html` and the files in `Bilder Idrelyan/` is all that's needed. Note that the folder name contains a space (referenced as `Bilder%20Idrelyan/`), and that `IMG_1317.JPG` has an uppercase extension; both matter on case-sensitive (Linux) hosting.
+
 ## Deployment
 
-Hosted with GitHub Pages.
+Static hosting — upload `index.html`, `favicon.svg` and the `Bilder Idrelyan/` folder to the web root. The server must serve `.mp4` with byte-range support, or the drone video will not play on iOS.
 
 ## Contact
 
