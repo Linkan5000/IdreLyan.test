@@ -14,4 +14,4 @@ Hosted with GitHub Pages.
 
 ## Contact
 
-Phone: 0766-113700 · info@idrelyan.se
+Johan 0705-560023 · Stefan 0708-340043 · info@idrelyan.se

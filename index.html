@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Idrelyan — Stuga & fjällboende i Idre</title>
   <meta name="description" content="Idrelyan — två fullt utrustade stugor i Idre. Stora lyan (ca 160 kvm, 15 bäddar, bastu) och Lilla lyan (ca 60 kvm, 6 bäddar). Boka ditt fjällboende nära backen." />
+  <meta name="theme-color" content="#1a1714" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Idrelyan" />
+  <meta property="og:title" content="Idrelyan — Stuga & fjällboende i Idre" />
+  <meta property="og:description" content="Två fullt utrustade stugor i Idre. Stora lyan (ca 160 kvm, 15 bäddar, bastu) och Lilla lyan (ca 60 kvm, 6 bäddar). Boka ditt fjällboende nära backen." />
+  <meta property="og:image" content="Bilder%20Idrelyan/image00113.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Idrelyan — Stuga & fjällboende i Idre" />
+  <meta name="twitter:description" content="Två fullt utrustade stugor i Idre, nära backe och fjäll." />
+  <meta name="twitter:image" content="Bilder%20Idrelyan/image00113.jpeg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "Idrelyan",
+    "description": "Två fullt utrustade stugor i Idre — Stora lyan (ca 160 kvm, 15 bäddar, bastu) och Lilla lyan (ca 60 kvm, 6 bäddar).",
+    "telephone": ["+46705560023", "+46708340043"],
+    "email": "info@idrelyan.se",
+    "url": "https://idrelyan.se/",
+    "image": "https://idrelyan.se/Bilder%20Idrelyan/image00113.jpeg",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Idre",
+      "addressRegion": "Dalarna",
+      "addressCountry": "SE"
+    }
+  }
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -98,6 +129,11 @@
     .lb img { max-width: 92vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8); transform: scale(.96); transition: transform .4s var(--ease-spring); }
     .lb.open img { transform: scale(1); }
     .lb-close { position: absolute; top: 22px; right: 26px; color: #f7f3ec; font-size: 30px; line-height: 1; background: none; border: 0; cursor: pointer; }
+    .lb-nav { position: absolute; top: 50%; translate: 0 -50%; height: 46px; width: 46px; display: grid; place-items: center; border-radius: 9999px; color: #f7f3ec; background: rgba(247,243,236,.12); border: 0; font-size: 26px; line-height: 1; cursor: pointer; transition: background-color .3s var(--ease-spring); }
+    .lb-nav:hover, .lb-nav:focus-visible { background: rgba(247,243,236,.24); }
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+    .lb-counter { position: absolute; bottom: 22px; left: 50%; translate: -50% 0; color: rgba(247,243,236,.75); font-size: 13px; letter-spacing: .04em; }
 
     .eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 11px; font-weight: 600; }
 
@@ -142,14 +178,29 @@
           <a href="#pistkarta" class="nav-link">Pistkarta</a>
           <a href="#idre" class="nav-link">Idre</a>
         </div>
-        <a href="#boka" class="btn rounded-full bg-snow px-5 py-2 text-sm font-600 text-charcoal hover:bg-sand focus-visible:bg-sand">Boka</a>
+        <div class="flex items-center gap-2">
+          <a href="#boka" class="btn rounded-full bg-snow px-5 py-2 text-sm font-600 text-charcoal hover:bg-sand focus-visible:bg-sand">Boka</a>
+          <button id="menuToggle" type="button" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileMenu" class="btn md:hidden grid h-9 w-9 place-items-center rounded-full text-snow hover:bg-white/10 focus-visible:bg-white/10">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path id="menuIconOpen" d="M4 7h16M4 12h16M4 17h16"/><path id="menuIconClose" class="hidden" d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- mobile menu panel -->
+      <div id="mobileMenu" hidden class="md:hidden mt-2 rounded-3xl border border-white/10 bg-charcoal/95 backdrop-blur-md shadow-lift overflow-hidden">
+        <div class="flex flex-col p-3 text-snow text-base font-500">
+          <a href="#stora" class="mobile-nav-link rounded-2xl px-4 py-3 hover:bg-white/10">Stora lyan</a>
+          <a href="#lilla" class="mobile-nav-link rounded-2xl px-4 py-3 hover:bg-white/10">Lilla lyan</a>
+          <a href="#pistkarta" class="mobile-nav-link rounded-2xl px-4 py-3 hover:bg-white/10">Pistkarta</a>
+          <a href="#idre" class="mobile-nav-link rounded-2xl px-4 py-3 hover:bg-white/10">Idre</a>
+        </div>
       </div>
     </nav>
   </header>
 
   <!-- ============ HERO ============ -->
   <section id="top" class="relative min-h-[100svh] w-full overflow-hidden">
-    <img src="Bilder%20Idrelyan/image00113.jpeg" alt="Ljus, högt i tak och utsikt över snöklädd fjällskog i Stora lyan" class="absolute inset-0 h-full w-full object-cover" style="object-position: center 60%;" />
+    <img src="Bilder%20Idrelyan/image00113.jpeg" alt="Ljus, högt i tak och utsikt över snöklädd fjällskog i Stora lyan" class="absolute inset-0 h-full w-full object-cover" style="object-position: center 60%;" fetchpriority="high" decoding="async" />
     <div class="absolute inset-0 wash-hero"></div>
 
     <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 sm:px-8 pb-16 sm:pb-20">
@@ -209,8 +260,8 @@
 
       <!-- feature row: big photo + text -->
       <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-        <figure class="lg:col-span-7 photo rounded-3xl shadow-lift reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00211.jpeg" alt="Stora lyans ljusa allrum med soffor och TV" class="h-64 sm:h-[460px] w-full object-cover cursor-zoom-in" />
+        <figure class="lg:col-span-7 rounded-3xl shadow-lift reveal overflow-hidden">
+          <video src="Bilder%20Idrelyan/stora-drone-hero.mp4" poster="Bilder%20Idrelyan/IMG_3723.jpeg" class="h-64 sm:h-[460px] w-full object-cover" data-play-in-view loop muted playsinline preload="metadata" aria-label="Drönarvideo över Stora lyan en vinterdag"></video>
         </figure>
 
         <div class="lg:col-span-5 flex flex-col justify-between rounded-3xl bg-charcoal text-snow p-8 sm:p-10 shadow-lift reveal">
@@ -226,34 +277,57 @@
             <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>12 bäddar · 15 pers</li>
             <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Bastu</li>
             <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Braskamin</li>
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Tvättmaskin</li>
+            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Disk- och tvättmaskin</li>
             <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-ember"></span>Stor altan</li>
           </ul>
         </div>
       </div>
 
-      <!-- gallery -->
+      <!-- gallery: big photos -->
       <div class="gallery-carousel mt-8 sm:mt-6 lg:mt-8 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 lg:gap-8">
         <figure class="photo rounded-2xl shadow-soft reveal sm:col-span-2 lg:col-span-2">
-          <img data-lb src="Bilder%20Idrelyan/image00016.jpeg" alt="Idrelyan i vinterskrud med djup snö" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+          <img data-lb src="Bilder%20Idrelyan/image00107.jpeg" alt="Öppet kök och matplats med braskamin under högt i tak" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
-        <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00200.jpeg" alt="Sovrum med våningssängar" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        <figure class="photo rounded-2xl shadow-soft reveal sm:col-span-2 lg:col-span-2">
+          <img data-lb src="Bilder%20Idrelyan/image00124.jpeg" alt="Allrum med loftvåning, trappa och TV" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
-        <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00155.jpeg" alt="Bastu i trä" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        <figure class="photo rounded-2xl shadow-soft reveal sm:col-span-2 lg:col-span-2">
+          <img data-lb src="Bilder%20Idrelyan/IMG_1317.JPG" alt="Stor hörnsoffa vid fönstren i allrummet" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
-        <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00178.jpeg" alt="Badrum med dusch" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        <figure class="photo rounded-2xl shadow-soft reveal sm:col-span-2 lg:col-span-2">
+          <img data-lb src="Bilder%20Idrelyan/IMG_3715.jpeg" alt="Utsikt mot Idre Fjäll från altanen på vintern" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
-        <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00164.jpeg" alt="Allrum med TV och braskamin" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+      </div>
+
+      <!-- gallery: smaller extras, centered -->
+      <div class="mt-6 lg:mt-8 flex flex-wrap justify-center gap-6 lg:gap-8">
+        <figure class="photo rounded-2xl shadow-soft reveal w-[calc(50%-0.75rem)] sm:w-56 lg:w-64">
+          <img data-lb src="Bilder%20Idrelyan/image00211.jpeg" alt="Allrum med två soffor och TV" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
-        <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00070.jpeg" alt="Sovrum med flera bäddar" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        <figure class="photo rounded-2xl shadow-soft reveal w-[calc(50%-0.75rem)] sm:w-56 lg:w-64">
+          <img data-lb src="Bilder%20Idrelyan/IMG_6759.jpeg" alt="Snötäckt bord på altanen med utsikt mot Idre Fjäll" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
-        <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00011.jpeg" alt="Stora lyan utvändigt i vinterskrud" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+        <figure class="rounded-2xl shadow-soft reveal w-[calc(50%-0.75rem)] sm:w-56 lg:w-64">
+          <button type="button" data-lb-folder="stora-bath" aria-label="Visa alla 4 bilder av badrum, bastu och tvättstuga i Stora lyan" class="group relative block h-56 sm:h-72 w-full overflow-hidden rounded-2xl cursor-zoom-in">
+            <img src="Bilder%20Idrelyan/image00155.jpeg" alt="" class="h-full w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-spring)] group-hover:scale-[1.045]" loading="lazy" decoding="async" />
+            <div class="absolute inset-0 bg-charcoal/55 transition-colors duration-300 group-hover:bg-charcoal/65"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center text-snow">
+              <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6.5 6 11a6 6 0 1 1-12 0c0-4.5 6-11 6-11z"/></svg>
+              <span class="font-display text-lg font-600 display-tight">Badrum, bastu &amp; tvätt</span>
+              <span class="eyebrow text-snow/75">4 bilder</span>
+            </div>
+          </button>
+        </figure>
+        <figure class="rounded-2xl shadow-soft reveal w-[calc(50%-0.75rem)] sm:w-56 lg:w-64">
+          <button type="button" data-lb-folder="stora-beds" aria-label="Visa alla 6 bilder av sovrum och sängar i Stora lyan" class="group relative block h-56 sm:h-72 w-full overflow-hidden rounded-2xl cursor-zoom-in">
+            <img src="Bilder%20Idrelyan/image00193.jpeg" alt="" class="h-full w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-spring)] group-hover:scale-[1.045]" loading="lazy" decoding="async" />
+            <div class="absolute inset-0 bg-charcoal/55 transition-colors duration-300 group-hover:bg-charcoal/65"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center text-snow">
+              <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="7" rx="1.5"/><path d="M5 11V8a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/><path d="M14 9h3a2 2 0 0 1 2 2v0"/><path d="M3 18v2M21 18v2"/></svg>
+              <span class="font-display text-lg font-600 display-tight">Sovrum &amp; sängar</span>
+              <span class="eyebrow text-snow/75">6 bilder</span>
+            </div>
+          </button>
         </figure>
       </div>
     </div>
@@ -271,38 +345,36 @@
       </div>
 
       <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-        <div class="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-between rounded-3xl border border-birch bg-white/70 p-8 sm:p-10 shadow-soft reveal">
-          <div>
-            <p class="text-stone body-lh text-[17px]">
-              Lilla Idrelyan är ca 60 kvm stor och har sex sängplatser + plats för små barn, fördelat på två sovrum.
-              Sovrum ett har en dubbelsäng och barnsäng. Sovrum två har två rejäla våningssängar.
-              Vidare finns kök och ett mysigt kombinerat allrum / matplats med soffa och TV.
-            </p>
-          </div>
-          <ul class="mt-8 grid grid-cols-2 gap-3 text-sm text-ink">
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>2 sovrum</li>
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>6 bäddar + småbarn</li>
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Dubbelsäng</li>
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Våningssängar</li>
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Kök</li>
-            <li class="flex items-center gap-2.5"><span class="h-1.5 w-1.5 rounded-full bg-falu"></span>Allrum &amp; TV</li>
-          </ul>
+        <div class="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center rounded-3xl border border-birch bg-white/70 p-8 sm:p-10 shadow-soft reveal">
+          <p class="text-stone body-lh text-[17px]">
+            Lilla delen på 60 kvm har 6 bäddar fördelat på 2 sovrum, varav det ena med dubbelsäng och det andra med två våningssängar.
+            Många bekvämligheter så som badrum, ett välutrustat kök/allrum med diskmaskin, mikrovågsugn, torkskåp, golvvärme, TV.
+          </p>
         </div>
 
         <figure class="lg:col-span-7 order-1 lg:order-2 photo rounded-3xl shadow-lift reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00085.jpeg" alt="Lilla lyans kök med vita luckor" class="h-64 sm:h-[460px] w-full object-cover cursor-zoom-in" />
+          <img data-lb src="Bilder%20Idrelyan/image00092.jpeg" alt="Matplats med runt bord och soffa framför stora fönster mot snön" class="h-64 sm:h-[460px] w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
       </div>
 
       <div class="gallery-carousel mt-8 sm:mt-6 lg:mt-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 lg:gap-8">
         <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00030.jpeg" alt="Mysig matplats i Lilla lyan" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+          <img data-lb src="Bilder%20Idrelyan/image00034.jpeg" alt="Öppet kök, matplats och TV-hörna i Lilla lyan" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
         <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00056.jpeg" alt="Ljust sovrum" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+          <img data-lb src="Bilder%20Idrelyan/image00080.jpeg" alt="Välutrustat kök med diskmaskin och vita luckor" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
         <figure class="photo rounded-2xl shadow-soft reveal">
-          <img data-lb src="Bilder%20Idrelyan/image00006.jpeg" alt="Stugan utvändigt i snön" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" />
+          <img data-lb src="Bilder%20Idrelyan/image00044.jpeg" alt="Badrum med dusch och röd kakel" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+
+      <div class="mx-auto mt-6 lg:mt-8 grid max-w-3xl grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00051.jpeg" alt="Sovrum med dubbelsäng och fönster mot snön" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="photo rounded-2xl shadow-soft reveal">
+          <img data-lb src="Bilder%20Idrelyan/image00070.jpeg" alt="Sovrum med två våningssängar" class="h-56 sm:h-72 w-full object-cover cursor-zoom-in" loading="lazy" decoding="async" />
         </figure>
       </div>
     </div>
@@ -317,31 +389,30 @@
           <p class="eyebrow text-sand mb-4">Aktuell pistkarta</p>
           <h2 class="font-display font-600 display-tight text-4xl sm:text-5xl leading-none">Idre Fjäll — säsong 2025/2026</h2>
           <p class="mt-4 max-w-2xl text-snow/75 body-lh">
-            Officiell pistkarta från Idre Fjäll, inbäddad live nedan så att den alltid hålls uppdaterad.
+            Officiell pistkarta från Idre Fjäll — öppna den direkt hos dem, så har du alltid den senaste versionen.
             Backen ligger bara en kort transfer från husen — perfekt för dagar i liften.
           </p>
         </div>
         <div class="flex flex-wrap gap-3 reveal">
-          <a href="https://www.idrefjall.se/globalassets/1.-filer/kartor/pistkartor/idrefjall_pistkarta_2026.pdf" target="_blank" rel="noopener" class="btn rounded-full bg-snow px-5 py-2.5 text-sm font-600 text-pine hover:bg-sand">Öppna pistkarta (PDF)</a>
           <a href="https://www.idrefjall.se/om-oss/information/vader/" target="_blank" rel="noopener" class="btn rounded-full border border-snow/40 px-5 py-2.5 text-sm font-600 text-snow hover:bg-white/10">Live pist- &amp; liftstatus</a>
         </div>
       </div>
 
-      <div class="reveal rounded-3xl border border-white/15 bg-charcoal/40 p-2 sm:p-3 shadow-lift">
-        <div class="relative w-full overflow-hidden rounded-2xl bg-birch" style="aspect-ratio: 16/10;">
-          <div class="absolute inset-0 grid place-items-center text-stone">
-            <div class="flex items-center gap-3 text-sm font-500">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 animate-spin" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.2-8.6" stroke-linecap="round"/></svg>
-              Laddar pistkarta…
-            </div>
-          </div>
-          <iframe
-            title="Idre Fjäll pistkarta 2026"
-            src="https://docs.google.com/viewer?url=https%3A%2F%2Fwww.idrefjall.se%2Fglobalassets%2F1.-filer%2Fkartor%2Fpistkartor%2Fidrefjall_pistkarta_2026.pdf&embedded=true"
-            class="absolute inset-0 h-full w-full bg-snow" loading="lazy"></iframe>
-        </div>
-      </div>
-      <p class="mt-4 text-xs text-snow/55 reveal">Karta: © Idre Fjäll. Visas via officiell källa och kan variera under säsongen.</p>
+      <a href="https://www.idrefjall.se/globalassets/1.-filer/kartor/pistkartor/idrefjall_pistkarta_2026.pdf" target="_blank" rel="noopener"
+         class="btn group reveal flex flex-col items-start gap-6 rounded-3xl border border-white/15 bg-charcoal/40 p-7 shadow-lift hover:border-white/30 hover:bg-charcoal/60 sm:flex-row sm:items-center sm:gap-8 sm:p-10">
+        <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-falu/25 text-sand">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+        </span>
+        <span class="flex-1">
+          <span class="block font-display text-2xl sm:text-3xl font-600 display-tight text-snow">Pistkarta 2025/2026</span>
+          <span class="mt-2 block text-snow/70 body-lh">Öppnas som PDF hos Idre Fjäll — alltid den senaste versionen av kartan.</span>
+        </span>
+        <span class="flex shrink-0 items-center gap-2 text-sm font-600 text-sand">
+          Öppna kartan
+          <svg viewBox="0 0 24 24" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <p class="mt-4 text-xs text-snow/55 reveal">Karta: © Idre Fjäll. Öppnas hos Idre Fjäll och kan variera under säsongen.</p>
     </div>
   </section>
 
@@ -350,29 +421,36 @@
     <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-28">
       <div class="max-w-2xl reveal">
         <p class="eyebrow text-falu mb-4">Vad man kan göra i Idre?</p>
-        <h2 class="font-display font-500 display-tight text-4xl sm:text-5xl text-charcoal leading-[1.05]">Fjället runt knuten — året om.</h2>
+        <h2 class="font-display font-500 display-tight text-4xl sm:text-5xl text-charcoal leading-[1.05]">Fjället runt knuten.</h2>
       </div>
-      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
         <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
           <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l7-12 4 7 3-5 4 10z"/></svg>
           </div>
-          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Utförsåkning</h3>
-          <p class="mt-2.5 text-stone body-lh">Idre Fjäll erbjuder pister för hela familjen — från barnbacke till brantare nedfarter. Pistkartan finns ovan.</p>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Vintern i backen</h3>
+          <p class="mt-2.5 text-stone body-lh">Idre Fjäll har mycket bra slalombackar och fina längdskidspår, och fjällandskapet runt omkring bjuder på vackra utflykter. Här finns även simhall, träningslokal och bowlingbana.</p>
         </div>
         <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
           <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
-            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4-1 5-9 9-9M5 14l5-5M13 9l6 9"/></svg>
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 7 11h3l-4 6h12l-4-6h3z"/><path d="M12 17v4"/></svg>
           </div>
-          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Längd &amp; spår</h3>
-          <p class="mt-2.5 text-stone body-lh">Preparerade längdspår slingrar genom fjällterrängen direkt från området — för både motion och långfärd.</p>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Sommarens leder</h3>
+          <p class="mt-2.5 text-stone body-lh">Sommartid bjuder området på mycket fina vandringar — Nipfjället och Städjan hör till favoriterna. I Idre finns dessutom en mycket bra golfbana.</p>
         </div>
         <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
           <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
-            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-8 4 5 3-7 4 10M3 21h18"/></svg>
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
           </div>
-          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Vandring &amp; cykel</h3>
-          <p class="mt-2.5 text-stone body-lh">När snön smält tar leder för vandring och cykling vid. Fjällsommaren i Idre är ljus, vidsträckt och stillsam.</p>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Utflykter i närheten</h3>
+          <p class="mt-2.5 text-stone body-lh">Inom några mil når du Grövelsjön med sina vandringsleder och Fulufjällets nationalpark med Sveriges högsta vattenfall. Norge ligger nära för andra vyer, och fiskevattnen runt omkring är många.</p>
+        </div>
+        <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
+          <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3v18"/><path d="M11 5.5h8l2.5 2.5L19 10.5h-8z"/><path d="M11 13.5H5L2.5 16 5 18.5h6z"/></svg>
+          </div>
+          <h3 class="font-display text-2xl font-600 text-charcoal display-tight">Skoterled vid knuten</h3>
+          <p class="mt-2.5 text-stone body-lh">Skoterleden går nedanför huset. Åt ena hållet ligger Idre Fjälls backar bara någon kilometer bort — åt andra hållet tar den dig ner till Idre by.</p>
         </div>
       </div>
     </div>
@@ -387,30 +465,22 @@
           <p class="eyebrow text-sand mb-4">Priser &amp; bokning</p>
           <h2 class="font-display font-600 display-tight text-4xl sm:text-6xl leading-[1.02]">Boka din vistelse i Idrelyan.</h2>
           <p class="mt-6 max-w-lg text-snow/80 body-lh text-lg">
-            För aktuella priser vänligen kolla blocket.se eller stugnet.se (sök efter <span class="text-snow font-500">idrelyan</span>).
-            För information och/eller bokning hör gärna av dig.
+            För aktuella priser kontakta oss via telefon eller mail.
           </p>
-          <div class="mt-9 flex flex-wrap gap-4">
-            <a href="tel:0766113700" class="btn rounded-full bg-falu px-7 py-3.5 text-sm font-600 text-snow shadow-falu hover:bg-ember">Ring 0766-113700</a>
-            <a href="mailto:info@idrelyan.se" class="btn rounded-full border border-snow/40 px-7 py-3.5 text-sm font-600 text-snow hover:bg-white/10">info@idrelyan.se</a>
-          </div>
         </div>
 
         <div class="reveal grid sm:grid-cols-2 gap-5">
           <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-            <p class="text-sand text-xs eyebrow mb-3">Telefon</p>
-            <a href="tel:0766113700" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors">0766-113700</a>
+            <p class="text-sand text-xs eyebrow mb-3">Johan</p>
+            <a href="tel:0705560023" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors">0705-560023</a>
           </div>
           <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-            <p class="text-sand text-xs eyebrow mb-3">E-post</p>
-            <a href="mailto:info@idrelyan.se" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors break-all">info@idrelyan.se</a>
+            <p class="text-sand text-xs eyebrow mb-3">Stefan</p>
+            <a href="tel:0708340043" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors">0708-340043</a>
           </div>
           <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:col-span-2">
-            <p class="text-sand text-xs eyebrow mb-3">Aktuella priser</p>
-            <p class="text-snow/85 body-lh">Sök efter <span class="font-600">idrelyan</span> på
-              <a href="https://www.blocket.se" target="_blank" rel="noopener" class="underline decoration-falu/60 underline-offset-4 hover:text-sand">blocket.se</a> eller
-              <a href="https://www.stugnet.se" target="_blank" rel="noopener" class="underline decoration-falu/60 underline-offset-4 hover:text-sand">stugnet.se</a>.
-            </p>
+            <p class="text-sand text-xs eyebrow mb-3">E-post</p>
+            <a href="mailto:info@idrelyan.se" class="font-display text-2xl font-600 display-tight hover:text-sand transition-colors break-all">info@idrelyan.se</a>
           </div>
         </div>
       </div>
@@ -440,18 +510,49 @@
   <!-- Lightbox -->
   <div class="lb" id="lightbox" aria-hidden="true">
     <button class="lb-close" aria-label="Stäng">&times;</button>
+    <button class="lb-nav lb-prev" aria-label="Föregående bild" hidden>&#8249;</button>
     <img src="" alt="" />
+    <button class="lb-nav lb-next" aria-label="Nästa bild" hidden>&#8250;</button>
+    <p class="lb-counter" hidden></p>
   </div>
 
   <script>
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Play videos only once they scroll into view. A plain autoplay attribute
+    // makes the browser fetch the whole file on page load — 12 MB of mobile
+    // data for a video sitting far below the fold that may never be seen.
+    document.querySelectorAll('video[data-play-in-view]').forEach((v) => {
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        });
+      }, { threshold: 0.25 }).observe(v);
+    });
+
     // Scroll reveal
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIconOpen = document.getElementById('menuIconOpen');
+    const menuIconClose = document.getElementById('menuIconClose');
+    const setMenu = (open) => {
+      mobileMenu.hidden = !open;
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Stäng meny' : 'Öppna meny');
+      menuIconOpen.classList.toggle('hidden', open);
+      menuIconClose.classList.toggle('hidden', !open);
+    };
+    menuToggle.addEventListener('click', () => setMenu(mobileMenu.hidden));
+    document.querySelectorAll('.mobile-nav-link').forEach((el) => el.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
     // Navbar solidifies after hero
     const navbar = document.getElementById('navbar');
@@ -466,16 +567,69 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Lightbox
+    // Lightbox — supports single images and named multi-photo "folder" galleries
     const lb = document.getElementById('lightbox');
     const lbImg = lb.querySelector('img');
-    const openLb = (src, alt) => { lbImg.src = src; lbImg.alt = alt || ''; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
+    const lbPrev = lb.querySelector('.lb-prev');
+    const lbNext = lb.querySelector('.lb-next');
+    const lbCounter = lb.querySelector('.lb-counter');
+
+    const galleries = {
+      'stora-bath': [
+        { src: 'Bilder%20Idrelyan/image00149.jpeg', alt: 'Övre badrum med dusch och förvaring' },
+        { src: 'Bilder%20Idrelyan/image00155.jpeg', alt: 'Bastu i ljust trä' },
+        { src: 'Bilder%20Idrelyan/image00161.jpeg', alt: 'Tvättstuga med tvättmaskin och ingång till bastu' },
+        { src: 'Bilder%20Idrelyan/image00178.jpeg', alt: 'Badrum med dusch och tvättställ' },
+      ],
+      'stora-beds': [
+        { src: 'Bilder%20Idrelyan/image00193.jpeg', alt: 'Sovrum med våningssäng och enkelsängar, Stora lyan' },
+        { src: 'Bilder%20Idrelyan/image00192.jpeg', alt: 'Sovrum med våningssäng och enkelsäng vid fönster' },
+        { src: 'Bilder%20Idrelyan/image00197.jpeg', alt: 'Sovrum med våningssäng och byrå' },
+        { src: 'Bilder%20Idrelyan/image00200.jpeg', alt: 'Sovrum med våningssängar och byrå' },
+        { src: 'Bilder%20Idrelyan/image00203.jpeg', alt: 'Våningssäng med nybäddade sängar' },
+        { src: 'Bilder%20Idrelyan/image00209.jpeg', alt: 'Sovrum med våningssäng och dubbelsäng' },
+      ],
+    };
+
+    let lbList = [];
+    let lbIndex = 0;
+
+    const renderLb = () => {
+      const item = lbList[lbIndex];
+      lbImg.src = item.src;
+      lbImg.alt = item.alt || '';
+      const multi = lbList.length > 1;
+      lbPrev.hidden = !multi;
+      lbNext.hidden = !multi;
+      lbCounter.hidden = !multi;
+      if (multi) lbCounter.textContent = `${lbIndex + 1} / ${lbList.length}`;
+    };
+    const openLb = (list, startIndex) => {
+      lbList = list;
+      lbIndex = startIndex;
+      renderLb();
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
     const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+    const stepLb = (delta) => { lbIndex = (lbIndex + delta + lbList.length) % lbList.length; renderLb(); };
+
     document.querySelectorAll('img[data-lb]').forEach((img) => {
-      img.addEventListener('click', () => openLb(img.src, img.alt));
+      img.addEventListener('click', () => openLb([{ src: img.src, alt: img.alt }], 0));
     });
+    document.querySelectorAll('[data-lb-folder]').forEach((btn) => {
+      btn.addEventListener('click', () => openLb(galleries[btn.dataset.lbFolder], 0));
+    });
+    lbPrev.addEventListener('click', () => stepLb(-1));
+    lbNext.addEventListener('click', () => stepLb(1));
     lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('lb-close')) closeLb(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') stepLb(-1);
+      if (e.key === 'ArrowRight') stepLb(1);
+    });
   </script>
 </body>
 </html>

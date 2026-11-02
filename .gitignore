@@ -9,6 +9,10 @@ package.json
 package-lock.json
 CLAUDE.md
 
+# Internal handoff notes — kept local on purpose (this repo is public and the
+# notes reference the client, their hosting account and approval status).
+PROJECT-STATUS.md
+
 # Source photos: only the images used by the site are committed (force-added).
 # This rule keeps the other ~75 unused photos out of the repo.
 Bilder Idrelyan/
