@@ -129,12 +129,12 @@
     .lb.open { display: flex; opacity: 1; }
     .lb img { max-width: 92vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8); transform: scale(.96); transition: transform .4s var(--ease-spring); }
     .lb.open img { transform: scale(1); }
-    .lb-close { position: absolute; top: 22px; right: 26px; color: #f7f3ec; font-size: 30px; line-height: 1; background: none; border: 0; cursor: pointer; }
-    .lb-nav { position: absolute; top: 50%; translate: 0 -50%; height: 46px; width: 46px; display: grid; place-items: center; border-radius: 9999px; color: #f7f3ec; background: rgba(247,243,236,.12); border: 0; font-size: 26px; line-height: 1; cursor: pointer; transition: background-color .3s var(--ease-spring); }
+    .lb-close { position: absolute; z-index: 2; top: 22px; right: 26px; color: #f7f3ec; font-size: 30px; line-height: 1; background: none; border: 0; cursor: pointer; }
+    .lb-nav { position: absolute; z-index: 2; top: 50%; translate: 0 -50%; height: 46px; width: 46px; display: grid; place-items: center; border-radius: 9999px; color: #f7f3ec; background: rgba(247,243,236,.12); border: 0; font-size: 26px; line-height: 1; cursor: pointer; transition: background-color .3s var(--ease-spring); }
     .lb-nav:hover, .lb-nav:focus-visible { background: rgba(247,243,236,.24); }
     .lb-prev { left: 10px; }
     .lb-next { right: 10px; }
-    .lb-counter { position: absolute; bottom: 22px; left: 50%; translate: -50% 0; color: rgba(247,243,236,.75); font-size: 13px; letter-spacing: .04em; }
+    .lb-counter { position: absolute; z-index: 2; bottom: 22px; left: 50%; translate: -50% 0; color: rgba(247,243,236,.75); font-size: 13px; letter-spacing: .04em; }
 
     .eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 11px; font-weight: 600; }
 
@@ -157,6 +157,25 @@
         scroll-snap-align: center;
       }
       .gallery-carousel > figure img { height: 15rem; }
+
+      /* Same swipe treatment for the Idre tip cards, so they don't eat a
+         screenful of vertical space on a phone. */
+      .card-carousel {
+        display: flex;
+        gap: 0.85rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin-left: -1.25rem;
+        margin-right: -1.25rem;
+        padding: 0 1.25rem 0.4rem;
+        scrollbar-width: none;
+      }
+      .card-carousel::-webkit-scrollbar { display: none; }
+      .card-carousel > * {
+        flex: 0 0 82%;
+        scroll-snap-align: center;
+      }
     }
   </style>
 </head>
@@ -213,7 +232,9 @@
     <img src="Bilder%20Idrelyan/image00113.jpeg" alt="Ljus, högt i tak och utsikt över snöklädd fjällskog i Stora lyan" class="absolute inset-0 h-full w-full object-cover" style="object-position: center 60%;" fetchpriority="high" decoding="async" />
     <div class="absolute inset-0 wash-hero"></div>
 
-    <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 sm:px-8 pb-16 sm:pb-20">
+    <!-- pt clears the fixed navbar: on short screens the content outgrows the
+         viewport and would otherwise overflow upwards, behind the nav. -->
+    <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 sm:px-8 pt-24 sm:pt-28 pb-16 sm:pb-20">
       <p class="eyebrow text-sand/90 mb-5 reveal">Idre · Dalarna · Fjällboende</p>
       <h1 class="font-display font-600 display-tight text-snow text-[14vw] leading-[0.92] sm:text-7xl lg:text-8xl max-w-4xl reveal">
         Vakna mitt<br>i fjällen.
@@ -432,7 +453,7 @@
         <p class="eyebrow text-falu mb-4">Vad man kan göra i Idre?</p>
         <h2 class="font-display font-500 display-tight text-4xl sm:text-5xl text-charcoal leading-[1.05]">Fjället runt knuten.</h2>
       </div>
-      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div class="card-carousel mt-12 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 lg:gap-8">
         <div class="rounded-2xl border border-birch bg-white/70 p-7 shadow-soft reveal">
           <div class="grid h-11 w-11 place-items-center rounded-full bg-falu/10 text-falu mb-5">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l7-12 4 7 3-5 4 10z"/></svg>
