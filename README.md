@@ -8,6 +8,12 @@ A single-page static site (`index.html`) built with Tailwind CSS (via CDN), feat
 
 Open `index.html` directly in a browser, or serve the folder with any static server.
 
+If you have Node installed, `node serve.mjs` starts one on http://localhost:3000.
+It has no dependencies, and unlike some simple servers it sends the correct MIME
+type for `.mp4` and supports byte-range requests — both required for the drone
+video to play on iOS. `serve.mjs` is only for local preview; it does not need to
+be uploaded to the web host.
+
 There is no build step — editing `index.html` and the files in `Bilder Idrelyan/` is all that's needed. Note that the folder name contains a space (referenced as `Bilder%20Idrelyan/`), and that `IMG_1317.JPG` has an uppercase extension; both matter on case-sensitive (Linux) hosting.
 
 ## Deployment

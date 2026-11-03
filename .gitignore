@@ -2,8 +2,9 @@
 node_modules/
 
 # Local dev tooling & artifacts (not needed for the deployed site)
+# serve.mjs is deliberately NOT ignored — it is a zero-dependency local
+# preview server, handy for whoever maintains the site next.
 temporary screenshots/
-serve.mjs
 screenshot.mjs
 package.json
 package-lock.json
